@@ -2,6 +2,7 @@
 name = "rust_calendar_parser"
 version = "0.1.0"
 edition = "2021"
+description = "A parser built in Rust for parsing and analyzing Google Calendar events using Pest grammar."
 
 [dependencies]
 anyhow = "1.0.93"
