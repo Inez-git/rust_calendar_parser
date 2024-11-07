@@ -1,24 +1,26 @@
 // Grammar rules
 
 // The main rule to match an entire event
-event = { "BEGIN:VEVENT" ~ fields ~ "END:VEVENT" }
+event = { "BEGIN:VEVENT\n" ~ fields ~ "END:VEVENT" }
 
 // The individual fields we need to capture
-fields = { (field ~ newline)* }
+fields = { (dtstart ~ newline | dtend ~ newline | dtstamp ~ newline | uid ~ newline | created ~ newline | last_modified ~ newline | sequence ~ newline | status ~ newline | summary ~ newline | transp ~ newline)* }
 
-// Field structure: key-value pair
-field = { key ~ ":" ~ value }
+// Separate rules for each field
+dtstart = { "DTSTART" ~ ":" ~ datetime }
+dtend = { "DTEND" ~ ":" ~ datetime }
+dtstamp = { "DTSTAMP" ~ ":" ~ datetime }
+uid = { "UID" ~ ":" ~ email_address }
+created = { "CREATED" ~ ":" ~ datetime }
+last_modified = { "LAST-MODIFIED" ~ ":" ~ datetime }
+sequence = { "SEQUENCE" ~ ":" ~ digit+ }
+status = { "STATUS" ~ ":" ~ status_value }
+summary = { "SUMMARY" ~ ":" ~ string_value }
+transp = { "TRANSP" ~ ":" ~ transp_value }
 
-// The valid keys for each field
-key = { "DTSTART" | "DTEND" | "DTSTAMP" | "UID" | "CREATED" | "LAST-MODIFIED" | "SEQUENCE" | "STATUS" | "SUMMARY" | "TRANSP" }
-
-// Value parsing rule, differentiating types based on the key
-value = { datetime_value | email_value | string_value | numeric_value }
-
-datetime_value = @{ "DTSTART" | "DTEND" | "DTSTAMP" | "CREATED" | "LAST-MODIFIED" ~ datetime }
-email_value = @{ "UID" ~ email_address }
-string_value = @{ "SUMMARY" | "STATUS" | "TRANSP" ~ string_in_quotes }
-numeric_value = @{ "SEQUENCE" ~ digit+ }
+// STATUS and TRANSP specific value pattern
+status_value = { "CONFIRMED" | "TENTATIVE" | "CANCELLED" }
+transp_value = { "TRANSP" | "OPAQUE" }
 
 // Email address pattern
 email_address = @{ (letter_or_digit | "." | "_")+ ~ "@" ~ letter_or_digit+ ~ "." ~ letter_or_digit+ }
@@ -26,8 +28,8 @@ email_address = @{ (letter_or_digit | "." | "_")+ ~ "@" ~ letter_or_digit+ ~ "."
 // Date and time format (like 20241028T091500Z)
 datetime = @{ digit{8} ~ "T" ~ digit{6} ~ "Z" }
 
-// Helper for string in quotes, to capture values with spaces or special characters
-string_in_quotes = @{ "\"" ~ ( '\u{20}'..'\u{21}' | '\u{23}'..'\u{5B}' | '\u{5D}'..'\u{7A}' )* ~ "\"" }
+// Helper for string, to capture values with spaces or special characters
+string_value = @{ !newline ~ ( '\u{20}'..'\u{21}' | '\u{23}'..'\u{5B}' | '\u{5D}'..'\u{7A}' )* }
 
 digit = @{ '0'..'9' }
 letter_or_digit = @{ 'a'..'z' | 'A'..'Z' | '0'..'9' }

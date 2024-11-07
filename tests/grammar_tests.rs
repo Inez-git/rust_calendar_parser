@@ -53,10 +53,10 @@ mod rust_calendar_parser_tests {
     }
 
     #[test]
-    fn test_string_in_quotes() -> anyhow::Result<()> {
-        let valid_chars = ["\"hello\"", "\"world\""];
+    fn test_string_value() -> anyhow::Result<()> {
+        let valid_chars = ["h ello*", "wOrl 0d"];
         for input in valid_chars {
-            let parsed_data = Grammar::parse(Rule::string_in_quotes, input)?
+            let parsed_data = Grammar::parse(Rule::string_value, input)?
                 .next()
                 .ok_or_else(|| anyhow!("Failed to parse string_in_quotes"))?;
             assert_eq!(parsed_data.as_str(), input);
