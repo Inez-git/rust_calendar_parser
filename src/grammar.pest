@@ -4,7 +4,7 @@
 event = { "BEGIN:VEVENT" ~ fields ~ "END:VEVENT" }
 
 // The individual fields we need to capture
-fields = { (field ~ NEWLINE)* }
+fields = { (field ~ newline)* }
 
 // Field structure: key-value pair
 field = { key ~ ":" ~ value }
@@ -17,7 +17,7 @@ value = { datetime_value | email_value | string_value | numeric_value }
 
 datetime_value = @{ "DTSTART" | "DTEND" | "DTSTAMP" | "CREATED" | "LAST-MODIFIED" ~ datetime }
 email_value = @{ "UID" ~ email_address }
-string_value = @{ "SUMMARY" | "STATUS" | "TRANSP" ~ quoted_string }
+string_value = @{ "SUMMARY" | "STATUS" | "TRANSP" ~ string_in_quotes }
 numeric_value = @{ "SEQUENCE" ~ digit+ }
 
 // Email address pattern
@@ -26,14 +26,11 @@ email_address = @{ (letter_or_digit | "." | "_")+ ~ "@" ~ letter_or_digit+ ~ "."
 // Date and time format (like 20241028T091500Z)
 datetime = @{ digit{8} ~ "T" ~ digit{6} ~ "Z" }
 
-// Helper for quoted string, to capture values with spaces or special characters
-quoted_string = @{ "\"" ~ (string_content_char ~ ANY)* ~ "\"" }
+// Helper for string in quotes, to capture values with spaces or special characters
+string_in_quotes = @{ "\"" ~ ( '\u{20}'..'\u{21}' | '\u{23}'..'\u{5B}' | '\u{5D}'..'\u{7A}' )* ~ "\"" }
 
 digit = @{ '0'..'9' }
 letter_or_digit = @{ 'a'..'z' | 'A'..'Z' | '0'..'9' }
 
 // Newline separator for fields
-NEWLINE = { "\n" }
-
-string_content_char = @{ '\u{20}'..'\u{21}' | '\u{23}'..'\u{5B}' | '\u{5D}'..'\u{7A}' }
-
+newline = { "\n" }
