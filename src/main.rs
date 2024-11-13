@@ -38,7 +38,7 @@ fn main() -> Result<()> {
             println!("Google Calendar Events Parser by Inna Stetsiuk KN-4 Group 4");
         }
         "description" => {
-            println!("A parser built in Rust for parsing and analyzing Google Calendar events using Pest grammar.");
+            println!("A parser built in Rust for parsing Google Calendar events using Pest grammar rules and converting them to JSON format.");
         }
         _ => {
             eprintln!("Unknown command '{}'", args[1]);

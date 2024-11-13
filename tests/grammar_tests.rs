@@ -234,4 +234,15 @@ mod rust_calendar_parser_tests {
         assert_eq!(parsed_data.as_str(), input);
         Ok(())
     }
+
+    #[test]
+    fn test_event() -> anyhow::Result<()> {
+        let valid_event = "BEGIN:VEVENT\nDTSTART:20241028T091500Z\nDTEND:20241028T094000Z\nDTSTAMP:20241107T061409Z\nUID:1bgs@google.com\nCREATED:20241028T091121Z\nLAST-MODIFIED:20241028T091121Z\nSEQUENCE:0\nSTATUS:CONFIRMED\nSUMMARY:Pilates\nTRANSP:OPAQUE\nEND:VEVENT";
+        let parsed_data = EventParser::parse(Rule::event, valid_event)?
+            .next()
+            .ok_or_else(|| anyhow!("Failed to parse 'event' rule"))?;
+        assert_eq!(parsed_data.as_str(), valid_event);
+        Ok(())
+    }
+
 }
