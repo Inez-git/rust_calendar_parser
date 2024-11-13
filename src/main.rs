@@ -1,13 +1,57 @@
-use pest::Parser;
+use anyhow::Result;
 use rust_calendar_parser::*;
+use std::env;
+use std::path::Path;
 
-fn main() -> anyhow::Result<()> {
-    let input = "BEGIN:VEVENT\nDTSTART:20241028T091500Z\nDTEND:20241028T094000Z\nDTSTAMP:20241107T061409Z\nUID:0vgghd89dnkdfk9fjfbnmae1@google.com\nCREATED:20241028T091121Z\nLAST-MODIFIED:20241028T091121Z\nSEQUENCE:0\nSTATUS:CONFIRMED\nSUMMARY:English\nTRANSP:OPAQUE\nEND:VEVENT";
-    match Grammar::parse(Rule::event, input) {
-        Ok(parsed) => {
-            println!("{:?}", parsed);
+fn main() -> Result<()> {
+    let args: Vec<String> = env::args().collect();
+
+    if args.len() < 2 {
+        print_help();
+        return Ok(());
+    }
+
+    match args[1].as_str() {
+        "parse" => {
+            if args.len() != 4 {
+                eprintln!("Error: 'parse' command requires an input file and an output file.");
+                return Ok(());
+            }
+            let input_file_name = &args[2];
+            let output_file_name = &args[3];
+
+            let input_path = Path::new(input_file_name);
+            let output_path = Path::new(output_file_name);
+
+            match parse_events_from_txt_to_json(input_path, output_path) {
+                Ok(_) => println!(
+                    "Events have been written to JSON file: {}",
+                    output_file_name
+                ),
+                Err(e) => eprintln!("Error parsing file '{}': {}", input_file_name, e),
+            }
         }
-        Err(err) => eprintln!("Parsing error: {:?}", err),
+        "help" => {
+            print_help();
+        }
+        "credits" => {
+            println!("Google Calendar Events Parser by Inna Stetsiuk KN-4 Group 4");
+        }
+        "description" => {
+            println!("A parser built in Rust for parsing and analyzing Google Calendar events using Pest grammar.");
+        }
+        _ => {
+            eprintln!("Unknown command '{}'", args[1]);
+            println!("Run 'cargo run help' to see available commands.");
+        }
     }
     Ok(())
+}
+
+fn print_help() {
+    println!("Available commands:");
+    println!("  parse <input_file> <output_file> - Parse events and output as JSON");
+    println!("  help - Show this help message");
+    println!("  credits - Show the program credits");
+    println!("  description - Show the program description");
 }

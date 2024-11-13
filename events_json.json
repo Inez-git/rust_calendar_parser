@@ -1,0 +1,38 @@
+[
+  {
+    "CREATED": "20241028T091121Z",
+    "DTEND": "20241028T094000Z",
+    "DTSTAMP": "20241107T061409Z",
+    "DTSTART": "20241028T091500Z",
+    "LAST_MODIFIED": "20241028T091121Z",
+    "SEQUENCE": "0",
+    "STATUS": "CONFIRMED",
+    "SUMMARY": "English Class",
+    "TRANSP": "OPAQUE",
+    "UID": "0vgghd89dnkdk9fjfbnmae1@google.com"
+  },
+  {
+    "CREATED": "20241101T060000Z",
+    "DTEND": "20241101T130000Z",
+    "DTSTAMP": "20241101T070000Z",
+    "DTSTART": "20241101T120000Z",
+    "LAST_MODIFIED": "20241101T063000Z",
+    "SEQUENCE": "1",
+    "STATUS": "TENTATIVE",
+    "SUMMARY": "Team Meeting",
+    "TRANSP": "OPAQUE",
+    "UID": "abc123@calendar.com"
+  },
+  {
+    "CREATED": "20241201T105000Z",
+    "DTEND": "20241225T210000Z",
+    "DTSTAMP": "20241201T110000Z",
+    "DTSTART": "20241225T180000Z",
+    "LAST_MODIFIED": "20241201T110500Z",
+    "SEQUENCE": "0",
+    "STATUS": "CONFIRMED",
+    "SUMMARY": "Christmas Celebration",
+    "TRANSP": "OPAQUE",
+    "UID": "def4576@calendar.com"
+  }
+]
