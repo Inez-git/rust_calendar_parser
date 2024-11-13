@@ -1,6 +1,13 @@
 # rust_calendar_parser
-## A parser built in Rust for parsing and analyzing Google Calendar events using Pest grammar.
+## Description
+A parser built in Rust for parsing Google Calendar events using Pest grammar rules and converting them to JSON format.
 
+## Links
+- crate:
+- docs:
+
+## Parsing process 
+The parser reads Google Calendar event data, identifies specific fields, and parses each according to predefined Pest grammar rules. Each rule matches specific patterns in the event data, allowing the parser to extract structured information from raw text and organize it into JSON format for easy access.
 
 ## Fields
 A typical event in Calendar has such fields:<br>
@@ -14,6 +21,40 @@ A typical event in Calendar has such fields:<br>
 **`STATUS`** - the status of the event, such as whether it is confirmed, tentative, or cancelled;<br>
 **`SUMMARY`** - a short description or tittle of the event, such as the subject or topic;<br>
 **`TRANSP`** - specifies the transparency of the event, determining whether the event is shown as "busy" or "free" on a calendar.<br>
+
+## Grammar rules
+- event: ....
+- ......
+```
+event = ${ begin ~ new_line ~ dtstart ~ new_line ~ dtend ~ new_line ~ dtstamp ~ new_line ~ uid ~ new_line ~ created ~ new_line ~ last_modified ~ new_line ~ sequence ~ new_line ~ status ~ new_line ~ summary ~ new_line ~ transp ~ new_line ~ end }
+
+begin = ${ "BEGIN" ~ ":" ~ "VEVENT"}
+dtstart = ${ "DTSTART" ~ ":" ~ datetime }
+dtend = ${ "DTEND" ~ ":" ~ datetime }
+dtstamp = ${ "DTSTAMP" ~ ":" ~ datetime }
+uid = ${ "UID" ~ ":" ~ email_address }
+created = ${ "CREATED" ~ ":" ~ datetime }
+last_modified = ${ "LAST-MODIFIED" ~ ":" ~ datetime }
+sequence = ${ "SEQUENCE" ~ ":" ~ digit+ }
+status = ${ "STATUS" ~ ":" ~ status_value }
+summary = ${ "SUMMARY" ~ ":" ~ string_value }
+transp = ${ "TRANSP" ~ ":" ~ transp_value }
+end = ${ "END" ~ ":" ~ "VEVENT"}
+
+status_value = { "CONFIRMED" | "TENTATIVE" | "CANCELLED" }
+transp_value = { "TRANSP" | "OPAQUE" }
+email_address = { (letter_or_digit | "." | "_")+ ~ "@" ~ letter_or_digit+ ~ "." ~ letter_or_digit+ }
+datetime = { digit{8} ~ "T" ~ digit{6} ~ "Z" }
+string_value = { !new_line ~ ( '\u{20}'..'\u{21}' | '\u{23}'..'\u{5B}' | '\u{5D}'..'\u{7A}' )* }
+digit = { '0'..'9' }
+letter_or_digit = { 'a'..'z' | 'A'..'Z' | '0'..'9' }
+new_line = { "\n" }
+```
+
+## CLI commands
+- parse <input_file> <output_file> ...
+- help ...
+- credits ...
 
 ## Application
 - easily access event fields; 
