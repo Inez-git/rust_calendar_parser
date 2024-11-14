@@ -1,4 +1,4 @@
-# Rust Calendar Events Parser
+# Rust Calendar Parser
 ## Description
 A parser built in Rust for parsing Google Calendar events using Pest grammar rules and converting them to JSON format.
 
