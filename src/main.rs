@@ -3,6 +3,7 @@ use rust_calendar_parser::*;
 use std::env;
 use std::path::Path;
 
+/// Main function handling CLI commands for parsing, help, credits, and description.
 fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
 
@@ -48,6 +49,7 @@ fn main() -> Result<()> {
     Ok(())
 }
 
+/// Prints help information for the available CLI commands.
 fn print_help() {
     println!("Available commands:");
     println!("  parse <input_file> <output_file> - Parse events and output as JSON");

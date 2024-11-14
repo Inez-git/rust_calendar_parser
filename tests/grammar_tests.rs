@@ -244,5 +244,4 @@ mod rust_calendar_parser_tests {
         assert_eq!(parsed_data.as_str(), valid_event);
         Ok(())
     }
-
 }

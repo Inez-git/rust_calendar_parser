@@ -1,43 +1,55 @@
 // Grammar rules
 
-// The main rule to match an entire event
+/// Defines the structure of a full calendar event, with all required fields in a specific order.
 event = ${ begin ~ new_line ~ dtstart ~ new_line ~ dtend ~ new_line ~ dtstamp ~ new_line ~ uid ~ new_line ~ created ~ new_line ~ last_modified ~ new_line ~ sequence ~ new_line ~ status ~ new_line ~ summary ~ new_line ~ transp ~ new_line ~ end }
 
 // Separate rules for each field
-begin = ${ "BEGIN" ~ ":" ~ "VEVENT"}
+/// Matches the start of an event with the text "BEGIN".
+begin = ${ "BEGIN" ~ ":" ~ "VEVENT" }
+/// Specifies the start date and time of the event, formatted as "DTSTART:<datetime>".
 dtstart = ${ "DTSTART" ~ ":" ~ datetime }
+/// Specifies the end date and time of the event, formatted as "DTEND:<datetime>".
 dtend = ${ "DTEND" ~ ":" ~ datetime }
+/// The timestamp indicating when the event was created or last modified, formatted as "DTSTAMP:<datetime>".
 dtstamp = ${ "DTSTAMP" ~ ":" ~ datetime }
+/// Unique identifier for the event, structured as "UID:<email_address>".
 uid = ${ "UID" ~ ":" ~ email_address }
+/// The date and time when the event was initially created, formatted as "CREATED:<datetime>".
 created = ${ "CREATED" ~ ":" ~ datetime }
+/// The date and time when the event was last modified, formatted as "LAST-MODIFIED:<datetime>".
 last_modified = ${ "LAST-MODIFIED" ~ ":" ~ datetime }
+/// A sequence number tracking event updates, represented as "SEQUENCE:<digit(s)>".
 sequence = ${ "SEQUENCE" ~ ":" ~ digit+ }
+/// The event's status, such as "confirmed," "tentative," or "canceled", formatted as "STATUS:<status_value>".
 status = ${ "STATUS" ~ ":" ~ status_value }
+/// A brief title or description of the event, formatted as "SUMMARY:<string_value>".
 summary = ${ "SUMMARY" ~ ":" ~ string_value }
+/// Indicates the event's transparency (visibility), formatted as "TRANSP:<transp_value>".
 transp = ${ "TRANSP" ~ ":" ~ transp_value }
+/// Marks the end of an event with the text "END".
 end = ${ "END" ~ ":" ~ "VEVENT"}
 
 // Definitions for specific values in the fields
-// Allowed values for the event status
+/// Specifies valid status options for an event: "CONFIRMED," "TENTATIVE," or "CANCELLED".
 status_value = { "CONFIRMED" | "TENTATIVE" | "CANCELLED" }
 
-// Allowed values for the transparency setting
+/// Specifies transparency options, "TRANSP" or "OPAQUE," to indicate if the event is marked as busy or free.
 transp_value = { "TRANSP" | "OPAQUE" }
 
-// Matches an email address format for UID (combination of letters, digits, dot, and underscore)
+/// Defines the format of a valid email address for uid.
 email_address = { (letter_or_digit | "." | "_")+ ~ "@" ~ letter_or_digit+ ~ "." ~ letter_or_digit+ }
 
-// Matches date and time in the format YYYYMMDDTHHMMSSZ
+/// Matches a date and time in the format YYYYMMDDTHHMMSSZ.
 datetime = { digit{8} ~ "T" ~ digit{6} ~ "Z" }
 
-// Matches a generic string value without a newline
+/// A general string without newline characters, allowing specific punctuation.
 string_value = { !new_line ~ ( '\u{20}'..'\u{21}' | '\u{23}'..'\u{5B}' | '\u{5D}'..'\u{7A}' )* }
 
-// Matches a single digit from 0 to 9
+/// Matches a single numeric digit (0-9).
 digit = { '0'..'9' }
 
-// Matches a single letter or digit
+/// Matches any letter (uppercase or lowercase) or digit.
 letter_or_digit = { 'a'..'z' | 'A'..'Z' | '0'..'9' }
 
-// Matches a newline character, used to separate fields
+/// Matches a newline character to separate fields within an event.
 new_line = { "\n" }
