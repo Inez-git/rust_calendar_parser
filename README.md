@@ -35,11 +35,11 @@ A typical event in Calendar has such fields:<br>
 - event: Defines the structure of a full calendar event, with all required fields in a specific order.
 - begin: Matches the start of an event with the exact text "BEGIN".
 - dtstart: Specifies the start date and time of the event, formatted as "DTSTART:&lt;datetime&gt;".
-- dtend: Specifies the end date and time of the event, formatted as "DTEND:<datetime>".
-- dtstamp: The timestamp indicating when the event was created or last modified, formatted as "DTSTAMP:<datetime>".
+- dtend: Specifies the end date and time of the event, formatted as "DTEND:&lt;datetime&gt;".
+- dtstamp: The timestamp indicating when the event was created or last modified, formatted as "DTSTAMP:&lt;datetime&gt;".
 - uid: Unique identifier for the event, structured as "UID:<email_address>".
-- created: The date and time when the event was initially created, formatted as "CREATED:<datetime>".
-- last_modified: The date and time when the event was last modified, formatted as "LAST-MODIFIED:<datetime>".
+- created: The date and time when the event was initially created, formatted as "CREATED:&lt;datetime&gt;".
+- last_modified: The date and time when the event was last modified, formatted as "LAST-MODIFIED:&lt;datetime&gt;".
 - sequence: A sequence number tracking event updates, represented as "SEQUENCE:<digit(s)>".
 - status: The event's status, such as "confirmed," "tentative," or "canceled", formatted as "STATUS:<status_value>".
 - summary: A brief title or description of the event, formatted as "SUMMARY:<string_value>".
@@ -73,13 +73,13 @@ new_line = { "\n" }
 ```
 
 ## CLI commands
-- parse <input_file> <output_file> <br>
-Parses a specified input file of Google Calendar events and converts it to JSON format, saving the output to the specified file;
-- help<br>
-Displays information on all available CLI commands and usage examples.
-- credits<br>
-Shows author information and contributors to the project;
-- description<br>
+**`parse <input_file> <output_file>`**
+Parses a specified input file of Google Calendar events and converts it to JSON format, saving the output to the specified file;<br>
+**`help`**
+Displays information on all available CLI commands and usage examples;<br>
+**`credits`**
+Shows author information and contributors to the project;<br>
+**`description`**
 Provides a brief description of the project, including its purpose and features.
 
 ## Application
