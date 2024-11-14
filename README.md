@@ -23,9 +23,30 @@ A typical event in Calendar has such fields:<br>
 **`TRANSP`** - specifies the transparency of the event, determining whether the event is shown as "busy" or "free" on a calendar.<br>
 
 ## Grammar rules
-- event: ....
-- ......
-```
+- new_line: Matches a newline character to separate fields within an event.
+- letter_or_digit: Matches any letter (uppercase or lowercase) or digit.
+- digit: Matches a single numeric digit (0-9).
+- datetime: Matches a date and time in the format YYYYMMDDTHHMMSSZ.
+- string_value: A general string without newline characters, allowing specific punctuation.
+- email_address: Defines the format of a valid email address for uid.
+- transp_value: Specifies transparency options, "TRANSP" or "OPAQUE," to indicate if the event is marked as busy or free.
+- status_value: Specifies valid status options for an event: "CONFIRMED," "TENTATIVE," or "CANCELLED".
+
+- event: Defines the structure of a full calendar event, with all required fields in a specific order.
+- begin: Matches the start of an event with the exact text "BEGIN".
+- dtstart: Specifies the start date and time of the event, formatted as "DTSTART:<datetime>".
+- dtend: Specifies the end date and time of the event, formatted as "DTEND:<datetime>".
+- dtstamp: The timestamp indicating when the event was created or last modified, formatted as "DTSTAMP:<datetime>".
+- uid: Unique identifier for the event, structured as "UID:<email_address>".
+- created: The date and time when the event was initially created, formatted as "CREATED:<datetime>".
+- last_modified: The date and time when the event was last modified, formatted as "LAST-MODIFIED:<datetime>".
+- sequence: A sequence number tracking event updates, represented as "SEQUENCE:<digit(s)>".
+- status: The event's status, such as "confirmed," "tentative," or "canceled", formatted as "STATUS:<status_value>".
+- summary: A brief title or description of the event, formatted as "SUMMARY:<string_value>".
+- transp: Indicates the event's transparency (visibility), formatted as "TRANSP:<transp_value>".
+- end: Marks the end of an event with the text "END".
+ 
+```rust
 event = ${ begin ~ new_line ~ dtstart ~ new_line ~ dtend ~ new_line ~ dtstamp ~ new_line ~ uid ~ new_line ~ created ~ new_line ~ last_modified ~ new_line ~ sequence ~ new_line ~ status ~ new_line ~ summary ~ new_line ~ transp ~ new_line ~ end }
 
 begin = ${ "BEGIN" ~ ":" ~ "VEVENT"}
@@ -52,9 +73,14 @@ new_line = { "\n" }
 ```
 
 ## CLI commands
-- parse <input_file> <output_file> ...
-- help ...
-- credits ...
+- parse <input_file> <output_file>
+Parses a specified input file of Google Calendar events and converts it to JSON format, saving the output to the specified file;
+- help
+Displays information on all available CLI commands and usage examples.
+- credits
+Shows author information and contributors to the project;
+- description
+Provides a brief description of the project, including its purpose and features.
 
 ## Application
 - easily access event fields; 
