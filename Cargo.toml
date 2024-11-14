@@ -3,6 +3,7 @@ name = "rust_calendar_parser"
 version = "0.1.1"
 edition = "2021"
 description = "A parser built in Rust for parsing Google Calendar events using Pest grammar rules and converting them to JSON format."
+license = "MIT"
 repository = "https://github.com/Inez-git/rust_calendar_parser"
 
 [dependencies]
