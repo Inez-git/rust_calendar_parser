@@ -73,14 +73,10 @@ new_line = { "\n" }
 ```
 
 ## CLI commands
-**`parse <input_file> <output_file>`**
-Parses a specified input file of Google Calendar events and converts it to JSON format, saving the output to the specified file;<br>
-**`help`**
-Displays information on all available CLI commands and usage examples;<br>
-**`credits`**
-Shows author information and contributors to the project;<br>
-**`description`**
-Provides a brief description of the project, including its purpose and features.
+**`parse <input_file> <output_file>`** - parses a specified input file of Google Calendar events and converts it to JSON format, saving the output to the specified file;<br>
+**`help`** - displays information on all available CLI commands and usage examples;<br>
+**`credits`** - shows author information and contributors to the project;<br>
+**`description`** - provides a brief description of the project, including its purpose and features.
 
 ## Application
 - easily access event fields; 
