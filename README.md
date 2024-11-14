@@ -34,7 +34,7 @@ A typical event in Calendar has such fields:<br>
 
 - event: Defines the structure of a full calendar event, with all required fields in a specific order.
 - begin: Matches the start of an event with the exact text "BEGIN".
-- dtstart: Specifies the start date and time of the event, formatted as "DTSTART:<datetime>".
+- dtstart: Specifies the start date and time of the event, formatted as "DTSTART:&lt;datetime&gt;".
 - dtend: Specifies the end date and time of the event, formatted as "DTEND:<datetime>".
 - dtstamp: The timestamp indicating when the event was created or last modified, formatted as "DTSTAMP:<datetime>".
 - uid: Unique identifier for the event, structured as "UID:<email_address>".
@@ -73,13 +73,13 @@ new_line = { "\n" }
 ```
 
 ## CLI commands
-- parse <input_file> <output_file>
+- parse <input_file> <output_file> <br>
 Parses a specified input file of Google Calendar events and converts it to JSON format, saving the output to the specified file;
-- help
+- help<br>
 Displays information on all available CLI commands and usage examples.
-- credits
+- credits<br>
 Shows author information and contributors to the project;
-- description
+- description<br>
 Provides a brief description of the project, including its purpose and features.
 
 ## Application
