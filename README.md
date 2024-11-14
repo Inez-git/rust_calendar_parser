@@ -1,10 +1,10 @@
-# rust_calendar_parser
+# Rust Calendar Events Parser
 ## Description
 A parser built in Rust for parsing Google Calendar events using Pest grammar rules and converting them to JSON format.
 
 ## Links
-- crate:
-- docs:
+- crate: https://crates.io/crates/rust_calendar_parser
+- docs: https://docs.rs/rust_calendar_parser
 
 ## Parsing process 
 The parser reads Google Calendar event data, identifies specific fields, and parses each according to predefined Pest grammar rules. Each rule matches specific patterns in the event data, allowing the parser to extract structured information from raw text and organize it into JSON format for easy access.
